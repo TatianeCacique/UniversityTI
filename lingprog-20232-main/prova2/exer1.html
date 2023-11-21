@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Car Ratings</title>
+</head>
+<body>
+    <script>
+        class Car {
+            constructor(brand, model, year, value) {
+                this.brand = brand;
+                this.model = model;
+                this.year = year;
+                this.value = value;
+                this.ratings = [];
+            }
+        }
+
+        const cars = [];
+
+        function registerCars() {
+            for (let i = 0; i < 4; i++) {
+                const brand = prompt("Enter the brand of the car:");
+                const model = prompt("Enter the model of the car:");
+                const year = prompt("Enter the year of the car:");
+                const value = prompt("Enter the value of the car:");
+
+                const car = new Car(brand, model, year, value);
+
+                for (let j = 0; j < 5; j++) {
+                    const rating = prompt(`Enter the rating ${j + 1} for the car:`);
+                    car.ratings.push(parseFloat(rating));
+                }
+
+                cars.push(car);
+            }
+        }
+
+        function calculateAverageRatings() {
+            for (let i = 0; i < cars.length; i++) {
+                const car = cars[i];
+                const sum = car.ratings.reduce((acc, rating) => acc + rating, 0);
+                const average = sum / car.ratings.length;
+                console.log(`Car: ${car.brand} ${car.model} - Average Rating: ${average}`);
+            }
+        }
+
+        function calculateLowestRatingModel() {
+            for (let i = 0; i < 5; i++) {
+                let lowestRating = Number.MAX_VALUE;
+                let lowestRatingModel = "";
+
+                for (let j = 0; j < cars.length; j++) {
+                    const car = cars[j];
+                    const rating = car.ratings[i];
+
+                    if (rating < lowestRating) {
+                        lowestRating = rating;
+                        lowestRatingModel = `${car.brand} ${car.model}`;
+                    }
+                }
+
+                console.log(`Lowest Rating for Evaluation ${i + 1}: ${lowestRatingModel}`);
+            }
+        }
+
+        function calculateLowestAverageRating() {
+            let lowestAverage = Number.MAX_VALUE;
+            let lowestAverageEvaluation = "";
+
+            for (let i = 0; i < 5; i++) {
+                const sum = cars.reduce((acc, car) => acc + car.ratings[i], 0);
+                const average = sum / cars.length;
+
+                if (average < lowestAverage) {
+                    lowestAverage = average;
+                    lowestAverageEvaluation = `Evaluation ${i + 1}`;
+                }
+            }
+
+            console.log(`Evaluation with Lowest Average Rating: ${lowestAverageEvaluation}`);
+        }
+
+        registerCars();
+        calculateAverageRatings();
+        calculateLowestRatingModel();
+        calculateLowestAverageRating();
+    </script>
+</body>
+</html>
